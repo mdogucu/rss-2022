@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>A First Bayesian Course: Why, What, and How</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mine Dogucu, Ph.D." />
+    <meta name="date" content="2022-05-04" />
+    <script src="libs/header-attrs-2.13/header-attrs.js"></script>
+    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="assets/style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# A First Bayesian Course: Why, What, and How
+## <a href="https://bit.ly/dogucu-talks">bit.ly/dogucu-talks</a> <br> <br>Talk at RSS Teaching Statistics SIG, <i>The past, present and future of statistics teaching </i>
+### Mine Dogucu, Ph.D.
+### 2022-05-04
+
+---
+
+
+class: middle center
+
+
+
+
+
+
+
+&lt;img src="img/headshot.jpeg"
+        alt="A headshot of a woman with curly, short, ear-length hair with green eyes and red lipstick."
+        style="width:165px; margin-top:20px; border: 3px solid whitesmoke; padding: 10px;"&gt;
+        
+.large[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg>] &lt;a href = "http://minedogucu.com"&gt;minedogucu.com&lt;/a&gt;  
+.large[<svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>] &lt;a href = "http://github.com/mdogucu"&gt;mdogucu&lt;/a&gt;   
+.large[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>] &lt;a href = "http://twitter.com/MineDogucu"&gt;MineDogucu&lt;/a&gt;  
+
+---
+class: center middle
+
+&lt;img src="img/stats-115-logo.png" title="Stats 115 course logo with prior, likelihood, and posterior plots!" alt="Stats 115 course logo with prior, likelihood, and posterior plots!" width="25%" style="display: block; margin: auto;" /&gt;
+
+[Introduction to Bayesian Data Analysis](https://www.stats115.com)
+
+---
+
+&lt;img src="img/bayes-courses-us.png" title="A table with list of majors that include Bayesian courses as part of the major. There are two majors that require a Bayesian course." alt="A table with list of majors that include Bayesian courses as part of the major. There are two majors that require a Bayesian course." width="68%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;a href="https://arxiv.org/abs/2109.00848" style="font-size: 15px"&gt;Dogucu, M., &amp; Hu, J. (2021). The Current State of Undergraduate Bayesian Education and Recommendations for the Future. arXiv preprint arXiv:2109.00848.&lt;/a&gt;
+
+---
+
+
+class:center
+
+&lt;img src="img/bayes-rules-hex.png" title="a hex shaped logo with shiny green-pink disco ball and purple starry background. There is text that says Bayes Rules!" alt="a hex shaped logo with shiny green-pink disco ball and purple starry background. There is text that says Bayes Rules!" width="25%" style="display: block; margin: auto;" /&gt;
+
+
+.pull-left[
+&lt;script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-replace-svg="nest"&gt;&lt;/script&gt;
+
+&lt;i class="fas fa-book fa-2x" aria-hidden="true" title="Book icon"&gt;&lt;/i&gt;
+
+[Bayes Rules! An Introduction to Applied Bayesian Modeling](https://bayesrulesbook.com)
+
+]
+
+.pull-right[
+
+&lt;i class="fab fa-r-project fa-2x" aria-hidden="true" title="R logo"&gt;&lt;/i&gt;
+
+[{bayesrules}](https://www.github.com/bayes-rules/bayesrules)
+]
+
+
+---
+
+class: middle 
+
+.pull-left[
+.center[
+
+ 
+&lt;img src="img/alicia.jpg"
+        alt="A headshot of a woman with long blonde hair wearing a brownish yellow tshirt and a red and pink floral silk scarf wrapped around her neck."
+        style="width:165px; margin-top:20px; border: 3px solid whitesmoke; padding: 10px;"&gt;
+
+Alicia Johnson          
+.font-20[Macalester College]
+        
+[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg>](https://ajohns24.github.io/portfolio)
+[<svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>](https://github.com/ajohns24)
+
+]
+]
+
+.pull-right[
+.center[
+&lt;img src="img/miles.png"
+        alt="A headshot of a man with short dark hair, and a dark moustache. He is wearing a blue button up shirt and dark gray jacket"
+        style="width:165px; margin-top:20px; border: 3px solid whitesmoke; padding: 10px;"&gt;
+
+Miles Ott  
+.font-20[Twitter]
+
+[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg>](https://milesott.com/)
+[<svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>](https://github.com/MilesOtt)
+[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>](https://twitter.com/Miles_Ott)
+
+]
+]
+
+---
+
+class: middle 
+
+## Southern California Data Science Program
+
+HDR DSC awards: \#2123366 \#2123380 \#2123384
+
+&lt;img src="img/nsf-logo.png" title="NSF logo" alt="NSF logo" width="10%" style="display: block; margin: auto;" /&gt;
+
+Through this collaborative grant between University of California Irvine, California State University Fullerton, and Cypress College, a Bayesian course will be adopted at California State University Fullerton.
+
+---
+
+class: middle
+
+&lt;style type="text/css"&gt;
+.panelset {
+  --panel-tab-foreground: whitesmoke;
+  --panel-tab-active-foreground: whitesmoke;
+  --panel-tabs-border-bottom: #00a1a1;
+  --panel-tab-inactive-opacity: 0.5;}
+&lt;/style&gt;
+
+.panelset.sideways[
+.panel[.panel-name[Unit 1]
+
+### Bayesian Foundations
+
+.pull-right[
+
+
+- Bayes' Rule
+- The Beta-Binomial Bayesian Model
+- Balance and Sequentiality in Bayesian Analysis
+- Conjugate Families
+
+]
+
+.pull-left[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" title="three curves on a single plot with no axis labeled. It is coloring scheme indicates its similarity to the previous plot with prior, scaled likelihood and posterior" alt="three curves on a single plot with no axis labeled. It is coloring scheme indicates its similarity to the previous plot with prior, scaled likelihood and posterior" style="display: block; margin: auto;" /&gt;
+]
+
+]
+
+.panel[.panel-name[Unit 2]
+
+### Posterior Simulation &amp; Analysis
+
+
+.pull-right[
+
+&lt;img src="img/unit2.png" title="A traceplot with no axis labels. Traceplots have thin vertical lines with varying lengths." alt="A traceplot with no axis labels. Traceplots have thin vertical lines with varying lengths." width="100%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+.pull-left[
+
+- Grid Approximation
+
+- The Metropolis-Hastings Algorithm
+
+- Posterior Estimation
+
+- Posterior Hypothesis Testing
+
+- Posterior Prediction
+
+]
+
+]
+
+
+.panel[.panel-name[Unit 3]
+
+### Regression and Classification
+
+.pull-right[
+
+&lt;img src="img/unit3.png" title="A scatterplot with multiple regression lines passing through points. These regression lines are not all over the place, they are clustered with similar but varyin intercepts and slopes." alt="A scatterplot with multiple regression lines passing through points. These regression lines are not all over the place, they are clustered with similar but varyin intercepts and slopes." width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+.pull-left[
+
+- Normal Regression
+- Poisson and Negative Binomial Regression
+- Logistic Regression
+- Naive Bayes Classification
+
+]
+]
+
+.panel[.panel-name[Unit 4]
+
+### Hierarchical Models
+
+.pull-right[
+
+&lt;img src="img/unit4.png" title="a figure showing hierarchy with a rectangle on top. With a set of arrows pointing downwards leading to a set of rectangles below which also have a set of arrows pointing downwards leading to a different set of rectangles." alt="a figure showing hierarchy with a rectangle on top. With a set of arrows pointing downwards leading to a set of rectangles below which also have a set of arrows pointing downwards leading to a different set of rectangles." width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+.pull-left[
+
+- Normal hierarchical models without predictors
+- Normal hierarchical models with predictors
+- Non-Normal Hierarchical Regression &amp; Classification
+
+]
+
+]
+
+]
+
+---
+
+class: middle
+
+## Background of students taking the course
+
+- Prerequisite: STATS 120C. Introduction to Probability and Statistics III
+- Recommended: STATS 110. Statistical Methods for Data Analysis I
+- Students: Data Science major (required), Statistics minor (elective)
+
+
+
+---
+
+class: middle center
+
+## Big Picture
+
+&lt;img src="img/bayes-restaurant.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+class: middle
+
+## Context
+
+In Alison Bechdel’s 1985 comic strip The Rule, a character states that they only see a movie if it satisfies the following three rules ([Bechdel 1986](https://dykestowatchoutfor.com/the-essential-dtwof/)):
+
+- the movie has to have at least two women in it;
+- these two women talk to each other; and
+- they talk about something besides a man.
+
+--
+
+Let `\(\pi\)`, a random value between 0 and 1, denote the unknown proportion of  movies that pass the Bechdel test (i.e. `\(\pi \in [0,1]\)`).
+
+---
+
+
+
+.pull-left[
+![](index_files/figure-html/ch4-bechdel-priors-1.png)&lt;!-- --&gt;
+
+]
+
+--
+
+.pull-right2[
+- **Feminist** thinks that women are not represented in movies often. 
+- **Clueless** is unsure. 
+- **Optimist** thinks that Bechdel is a low bar for representation of women in movies and thinks almost all movies pass the test.
+- Can you match the plots with the personas?]
+
+---
+
+class: middle
+
+## Plotting Beta Prior with `bayesrules` package
+
+One can use the `plot_beta()` function in the `bayesrules` package to try different shape parameters. Example:
+
+
+```r
+library(bayesrules)
+plot_beta(alpha = 2, beta = 10) 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Plotting Beta Prior
+
+&lt;img src="index_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: middle
+
+
+```r
+one_mh_iteration &lt;- function(w, current){
+ # STEP 1: Propose the next chain location
+ proposal &lt;- runif(1, min = current - w, max = current + w)
+  
+ # STEP 2: Decide whether or not to go there
+ proposal_plaus &lt;- dnorm(proposal, 0, 1) * dnorm(6.25, proposal, 0.75)
+ current_plaus  &lt;- dnorm(current, 0, 1) * dnorm(6.25, current, 0.75)
+ alpha &lt;- min(1, proposal_plaus / current_plaus)
+ next_stop &lt;- sample(c(proposal, current), 
+  size = 1, prob = c(alpha, 1-alpha))
+  
+ # Return the results
+ return(data.frame(proposal, alpha, next_stop))
+}
+```
+
+---
+
+
+
+
+```r
+mh_tour &lt;- function(N, w){
+  # 1. Start the chain at location 3
+  current &lt;- 3
+  # 2. Initialize the simulation
+  mu &lt;- rep(0, N)
+  # 3. Simulate N Markov chain stops
+  for(i in 1:N){    
+    # Simulate one iteration
+    sim &lt;- one_mh_iteration(w = w, current = current)
+    
+    # Record next location
+    mu[i] &lt;- sim$next_stop
+    
+    # Reset the current location
+    current &lt;- sim$next_stop
+  }
+  
+  # 4. Return the chain locations
+  return(data.frame(iteration = c(1:N), mu))
+}
+```
+
+---
+
+
+```r
+set.seed(84735)
+mh_simulation_1 &lt;- mh_tour(N = 5000, w = 1)
+```
+
+.pull-left[
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+
+---
+
+
+class: middle
+
+## `library(rstan)`
+
+
+.pull-left[
+
+```r
+# STEP 1: DEFINE the model
+stan_bike_model &lt;- "
+  data {
+    int&lt;lower=0&gt; n;
+    vector[n] Y;
+    vector[n] X;
+  }
+  parameters {
+    real beta0;
+    real beta1;
+    real&lt;lower=0&gt; sigma;
+  }
+  model {
+    Y ~ normal(beta0 + beta1 * X, sigma);
+  }
+"
+```
+
+]
+
+
+.pull-right[
+
+
+```r
+# STEP 2: SIMULATE the posterior
+stan_bike_sim &lt;- 
+  stan(model_code = stan_bike_model, 
+  data = list(n = nrow(bikes), 
+              Y = bikes$rides, X = bikes$temp_feel), 
+  chains = 4, iter = 5000*2, seed = 84735)
+```
+
+]
+
+---
+
+class: middle
+
+## `library(rstanarm)`
+
+
+
+```r
+normal_model_sim &lt;- stan_glm(rides ~ temp_feel, 
+                             data = bikes, 
+                             family = gaussian, 
+                             chains = 4, iter = 5000*2,
+                             seed = 84735)
+```
+
+
+
+---
+
+class: middle
+
+## Pedagogical Approach
+
+- Checking intuition 
+
+--
+
+- Active learning (quizzes and applications)
+
+--
+
+- Computing &amp; math together
+
+--
+
+- Compute for a single case, then use built-in functions
+
+--
+
+- [Accessible and Inclusive](https://arxiv.org/abs/2110.06355)
+
+
+---
+
+
+class: middle
+
+- [Undergraduate Bayesian Education Resources](https://undergrad-bayes.netlify.app/)
+
+--
+
+- [Undergraduate Bayesian Education Network](https://undergrad-bayes.netlify.app/network.html)
+
+
+
+---
+
+class: middle center
+
+# THANK YOU
+
+.large[
+[bit.ly/dogucu-talks](https://bit.ly/dogucu-talks)
+]
+
+.large[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>] &lt;a href = "http://twitter.com/MineDogucu"&gt;MineDogucu&lt;/a&gt;  
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
